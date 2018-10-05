@@ -21,9 +21,15 @@ function handleNumber(value) {
 }
 
 function handleMath(value) {
-  if (buffer === "0") {
-    // do nothing
-    return;
+  const intBuffer = parseInt(buffer);
+    if(runningTotal === 0) {
+        runningTotal = intBuffer;
+    } else {
+        flushOperation(intBuffer);
+    }
+
+    previousOperator = value;
+    buffer = "0";
   }
 
   const intBuffer = parseInt(buffer);
@@ -73,10 +79,7 @@ function handleSymbol(value) {
         buffer = buffer.substring(0, buffer.length - 1);
       }
       break;
-    case "+":
-    case "-":
-    case "×":
-    case "÷":
+    default:
       handleMath(value);
       break;
   }
